@@ -1,0 +1,106 @@
+13.59.63.49
+sqlcmd -S 18.217.107.237,1434 -U SA -P "Finning2010." -d UFJDB -i CreateTablesAndRows.sql
+
+https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-2017#os-x-1011-el-capitan-and-macos-1012-sierra
+
+to install the sql command utility on mac:
+
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew tap microsoft/mssql-release https://github.com/Microsoft/homebrew-mssql-release
+brew update
+brew install --no-sandbox msodbcsql17 mssql-tools
+
+connect to ec2:
+ssh -i NewUFJMVPInstance.pem ec2-user@18.217.107.237
+
+REMOVE ALL DOCKER IMAGES:
+docker rmi $(docker images -a -q)
+
+--Not working
+docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Finning2010.' -p 1434:1433 --name 490571305556.dkr.ecr.us-east-2.amazonaws.com/iam-repo:sql
+
+working:
+docker run -d -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Finning2010.' -p 1434:1433 <imageid>
+
+single  quote working --
+sqlcmd -S 18.217.107.237,1434 -U SA -P 'Finning2010.'
+
+copy the template to ec2
+
+scp -i NewUFJMVPInstance.pem email-template.html ec2-user@​​18.217.107.237​​:/home/ec2-user
+ssh -i NewUFJMVPInstance.pem ec2-user@18.217.107.237
+
+copy fronend code(folder) to EC2 from local:
+scp -i NewUFJMVPInstance.pem -r FrontEnd ec2-user@18.217.107.237:/home/ec2-user/apps
+
+docker cp email-template.html 53b4ec9eb55f:/app/files/email-template.html
+
+
+docker tag ufj:frontend 490571305556.dkr.ecr.us-east-2.amazonaws.com/iam-repo​​:frontend1
+docker push 490571305556.dkr.ecr.us-east-2.amazonaws.com/iam-repo:frontend1
+
+docker tag iam.ufj.webapi:latest 490571305556.dkr.ecr.us-east-2.amazonaws.com/iam-repo:backend2
+
+
+https://490571305556.dkr.ecr.us-east-2.amazonaws.com
+
+docker tag iam.ufj.webapi:latest 490571305556.dkr.ecr.us-east-2.amazonaws.com/iam-repo​​:backend1
+admin123$
+
+POST http://13.59.63.49:4300/api/users/login/admin@upfrontjobs.com/role/js 400 (Bad Request)
+https://13.59.63.49:4300/api/registration/email/vasanth@upfrontjobs.com/Li2lebird$
+
+Angular2 server start in background:
+nohup npm start > serveroutput.log &
+
+
+aws ecr get-login --no-include-email --region us-east-2
+
+
+iam.ufj.webapi                                          latest              b507fd4a0773
+
+docker login -u AWS -p eyJwYXlsb2FkIjoieDJPWFZnTHZTVGQ3T1BGMEprYy9JelZHWktJRkRLUWwyeGdjU0g0N0tBaTdPY0ZxcExCcWRNNERZZDE2eHYwUXlhQ0xiSzhGZzZySDhzeXJ3Z3hhaVppVkY1aGJPc2d3WUFqdUhLN3pzN0hkSlhiUGZ4N1NCWFlsanVvbkRvQU82V01uK3d3b1h0VERTOWtSVjJkY2dVdDBCVFRpREVhU2kxYWtDVzJzU0VBUE92SkFpcVhyRjZsUG0yTjU3OEdmSWtEbkdWOXRETmV1blhab2htTHpnbHJOZHlWZjhzSk1DSmpQN0lNSzBIWDZDWFNHZStFTTg0SGZWaEhlRTQxeURuUVFSbnNVN09GWCtmSU5nMlAyNDhDUkZkR21ENHVGVGZ3WERIZkZNK3N3U0dXVlluaUlwZk5hRGxQNnRFWmNBM2EybG9BK2cxWUNOTUVsYTVEZmNsY3R3VkQwUmdHNEdDQmRDREtQWWhkWE91YVB5OTVla0xqMTlselByNVE3SUtDRWdTNWlMR0lJNzJtUG1EaEkwcnNUWEQwZUxDTklTMkx1VktPQStNWDF5R0U3bEJ6dEU5UUtQMStUY2J4eGpGQzZiSlJEdmhsZzRWblJJZjYrOEU4NnE4RDg5UlJid3A0Y1BqdTYyWVhrcHlhMTlxZDJSb0syMXBhclI1TjUxbDIzK2hZSGJxOUVCWlhPVDBiQlhLNThYb3dFeXVCYWZQQW96R0ZGRWc5S3o2WXN2SWNDQStWZUpWUE05SlZtZFcyYXpUMjNET01JdTVuK01KNEdCOVJkbnlwRVYvSFFuT1VBL08rRlJYaTJXOENwd253eDBwZGxScHNCWUdvWUVsemdWWXFTS0hkQzE3QUtmcElaQ2VoQnRBQ3dCTVFVNUQ4a1pCMkJtamFSMEI3OG40TkZCbnV3aENZendQOEppd2QxNTFPcXBTVXA1R1lrMm5lN2Z0RGtSNmUvQWFndkQ4aWxlUHdSY3lncXFKcHdFMWVsNVNwTWJjekdyT1FRTlJaQ2N5czFqS1Y1SEhPWk43ZnlldGVYcXd0REp3Yk9jL0dwK0oycnptWm1rc3g3a1FMYnJmU0E5MFF5TmFsQkdrK0JRY2orMHlqQ2dzYWFiTGZxMVZJQ2JmY1A4VENSYUlyYWoxbmJBbHRHMHJsZERkc2hRcStpZStvcHEvSjUwSVU3aCtaZExoOEE5TXF5T0M1R1J6YXJPd3lzellVTTJtcm1Gbm9NdjFlemEwdm0vcWh4VllXTForREtqMVJURVdJeEc1U21RQ0laaXIzM3ozbGF5c1RFY1FNMXMxWVVkVkhyZS82Z2crSzJmenFxdkJVU2xpSEZVZGFSOS9DRlIxUkJaT2RFZHd1MDdVSUdYR3ZDR0NhMFdTd3V6UElwcTQzWlRBZEUwZTVOdjhVTHJhN01xTFdKQysxb251bUVLYkN2TnhERWpWSkVGc1NzUDJoeWZKMjFlMGdUdFU5WGw2c01neXJBT0lZcVNBPT0iLCJkYXRha2V5IjoiQVFFQkFIakI3L2lnd01nNE5Qd2F1cnhTSVl4NEhmbnh1R2MvNDhiRHd2d0RwTllXWmdBQUFINHdmQVlKS29aSWh2Y05BUWNHb0c4d2JRSUJBREJvQmdrcWhraUc5dzBCQndFd0hnWUpZSVpJQVdVREJBRXVNQkVFRE4zZ0lNUUhpaWxUS1NzV2x3SUJFSUE3UGkzU3JZRndBUlA3b3UvOXl2MjN6UlBDTnU2eVNLMzRxWEhWV3NZcEVrQUtybU9kZm5OVmFKci8wVXRQNWhhSHdMM2ZRbTNqdHkzbGRKMD0iLCJ2ZXJzaW9uIjoiMiIsInR5cGUiOiJEQVRBX0tFWSIsImV4cGlyYXRpb24iOjE1NTA0ODU2Mzl9 https://490571305556.dkr.ecr.us-east-2.amazonaws.com
+
+
+http://18.217.206.79:4300/api/users/registration/email/vasanth@upfrontjobs.com/password/ba5b7949dfd2e394e4944b3b9a58ed3cf096460e
+********************************* front end code install on EC2*************************
+UI - deployment
+
+
+https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html
+https://medium.com/@nishankjaintdk/setting-up-a-node-js-app-on-a-linux-ami-on-an-aws-ec2-instance-with-nginx-59cbc1bcc68c
+nvm install node -- for installing latest node.
+
+April 1st:
+
+nvm install 8
+
+Terminal -- go to code -- apps/frontend/IAMsrc/
+
+[ec2-user@ip-10-0-0-67 src]$ npm start
+
+> iam-ufj@0.0.0 start /home/ec2-user/apps/FrontEnd/IAM-UFJ
+> ng serve --host 0.0.0.0 --port 9000
+
+** Angular Live Development Server is listening on 0.0.0.0:9000, open your browser on http://localhost:9000/ **
+
+Date: 2019-04-02T03:26:48.678Z
+Hash: d6869a51682da9d9ab91
+Time: 24047ms
+chunk {main} main.js, main.js.map (main) 2.8 MB [initial] [rendered]
+chunk {polyfills} polyfills.js, polyfills.js.map (polyfills) 227 kB [initial] [rendered]
+chunk {runtime} runtime.js, runtime.js.map (runtime) 5.22 kB [entry] [rendered]
+chunk {scripts} scripts.js, scripts.js.map (scripts) 158 kB  [rendered]
+chunk {styles} styles.js, styles.js.map (styles) 210 kB [initial] [rendered]
+chunk {vendor} vendor.js, vendor.js.map (vendor) 5.61 MB [initial] [rendered]
+
+WARNING in Circular dependency detected:
+src/app/shared/models/Parametro.ts -> src/app/shared/models/Tag.ts -> src/app/shared/models/Parametro.ts
+
+WARNING in Circular dependency detected:
+src/app/shared/models/Tag.ts -> src/app/shared/models/Parametro.ts -> src/app/shared/models/Tag.ts
+ℹ ｢wdm｣: Compiled with warnings.
+
+*****
+Angular2 server start in background:
+nohup npm start > serveroutput.log
